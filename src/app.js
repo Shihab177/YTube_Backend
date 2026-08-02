@@ -17,4 +17,22 @@ app.use(cookieParser());
 app.use("/api/v1/users",userRouter)
 
 
+app.use((err, req, res, next) => {
+
+  const statusCode = 
+    typeof err.statusCode === "number" && err.statusCode >= 400 && err.statusCode < 600
+      ? err.statusCode
+      : 500;
+
+  const message = err.message || "Internal Server Error";
+
+  return res.status(statusCode).json({
+    success: false,
+    statusCode: statusCode,
+    message: message,
+    errors: err.errors || [],
+    data: null,
+    ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
+  });
+});
 export { app };
