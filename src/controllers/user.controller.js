@@ -252,7 +252,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
     .json(ApiResponse(200, req.user, "current user fetched successfully"));
 });
 
-export const updateAccountDetails = asyncHandler(async (req, res) => {
+ const updateAccountDetails = asyncHandler(async (req, res) => {
   const { userName, email, fullName } = req.body;
 
   if (!userName && !email && !fullName) {
@@ -355,4 +355,5 @@ export {
   getCurrentUser,
   updateAccountDetails,
   updateUserAvatar,
+  updateUserCoverImage 
 };
